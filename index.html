@@ -25,6 +25,10 @@
                                 <label for="username">Username:</label>
                                 <input type="text" class="form-control" id="username" name="username">
                             </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="text" class="form-control" id="password" name="password">
+                            </div>
                             <button type="submit" class="btn btn-primary">Login</button>
                         </form>
                         <p id="error-message" class="text-danger mt-3"></p>
@@ -39,10 +43,11 @@ $(document).ready(function(){
     $('#login-form').submit(function(event){
         event.preventDefault();
         var username = $('#username').val();
+        var password = $('#password').val();
         $.ajax({
             type: 'POST', 
             url: 'login.php', 
-            data: {username: username}, 
+            data: {username: username, password: password}, 
             success: function(response){
                 if(response.trim() === 'success') {
                     window.location.href = 'display.php'; 
