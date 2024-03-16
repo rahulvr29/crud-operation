@@ -37,7 +37,7 @@ if(isset($_POST['submit'])){
     $name = $_POST['name'];
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
-    $password = $_POST['password'];
+    $password = md5($_POST['password']);
 
     $insert = "INSERT INTO crud (name, email, mobile, password) 
                 VALUES ('$name', '$email', '$mobile', '$password')";
