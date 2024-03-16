@@ -10,4 +10,10 @@ if(isset($_GET['deleteid'])){
         die(mysqli_error($conn));
     }
 }
+
+session_start();
+    if(!isset($_SESSION['username'])) {
+        header("Location: index.html");
+        exit();
+    }
 ?>
