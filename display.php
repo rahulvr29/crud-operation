@@ -30,9 +30,12 @@ $res = mysqli_query($conn, $dis);
 <body>
 
   <div class="container">
-    <h1 class="text-center pt-5">Display Page</h1>
-    <div class="d-flex justify-content-end">
-    <button class="btn btn-primary my-5">
+    <h1 class="text-center pt-5 ">Display Page</h1>
+    <div class="d-flex justify-content-between">
+    <button class="btn btn-danger my-3">
+      <a href="logout.php" class="text-light text-decoration-none">Logout</a>
+    </button>
+    <button class="btn btn-primary my-3">
       <a href="user.php" class="text-light text-decoration-none">Add User</a>
     </button>
     </div>
@@ -67,8 +70,8 @@ $res = mysqli_query($conn, $dis);
   <td>'.$mobile.'</td>
   <td>'.$password.'</td>
   <td>
-    <button class="btn btn-primary"><a href="update.php?updateid='.$id.'" class="text-light text-decoration-none"><i class="bi bi-pencil"></i></a></button>
-    <button class="btn btn-danger"><a href="delete.php?deleteid='.$id.'" class="text-light text-decoration-none"><i class="bi bi-trash"></i></a></button>
+    <button class="btn btn-primary"><a href="update.php?updateid='.$id.'" class="text-light text-decoration-none"><i class="bi bi-pencil"></i>Edit</a></button>
+    <button class="btn btn-danger"><a href="delete.php?deleteid='.$id.'" class="text-light text-decoration-none"><i class="bi bi-trash"></i>Delete</a></button>
   </td>
 </tr>
 ';
@@ -92,7 +95,7 @@ $res = mysqli_query($conn, $dis);
       <script>
         $(document).ready(function() {
             $('#userTable').DataTable({
-                "lengthMenu": [[1, 2, 3, 5, -1], [1, 2, 3, 5, "All"]] // Custom entries for number of records per page
+                "lengthMenu": [[-1, 1, 2, 3, 5, ], ["All", 1, 2, 3, 5, ]] // Custom entries for number of records per page
             });
         });
     </script>

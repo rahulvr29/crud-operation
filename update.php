@@ -59,6 +59,7 @@
                                 <input type="text" class="form-control" name="password" value="<?php echo $row['password']; ?>">
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
+                            <a href="display.php"><button class="btn btn-danger">Cancel</button></a>
                         </form>
                     </div>
                 </div>
