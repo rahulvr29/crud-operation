@@ -1,14 +1,11 @@
 <?php
+
+
 include "connect.php";
 $dis = "SELECT * FROM crud ";
 $res = mysqli_query($conn, $dis);
 
 
-    session_start();
-    if(!isset($_SESSION['username'])) {
-        header("Location: index.html");
-        exit();
-    }
 
 ?>
 

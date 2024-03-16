@@ -1,13 +1,54 @@
-
-
 <?php
-
 session_start();
-    if(!isset($_SESSION['username'])) {
-        header("Location: index.html");
-        exit();
+if(!isset($_SESSION['username'])) {
+    header("Location: index.html");
+    exit();
+}
+
+$servername = "localhost";
+$username = "root";
+$password = ""; // Enter your password if you have set one
+$dbname = "crud_db";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// SQL query to create or alter a table
+$sql = "CREATE TABLE IF NOT EXISTS crud (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    mobile VARCHAR(30) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)";
+
+// Execute SQL query
+if ($conn->query($sql) === FALSE) {
+    die("Error creating table: " . $conn->error);
+}
+
+if(isset($_POST['submit'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $mobile = $_POST['mobile'];
+    $password = $_POST['password'];
+
+    $insert = "INSERT INTO crud (name, email, mobile, password) 
+                VALUES ('$name', '$email', '$mobile', '$password')";
+    $result = mysqli_query($conn, $insert);
+    if($result){
+        header('location: display.php');
+        exit(); // Add this line to prevent further execution
+    } else {
+        die(mysqli_error($conn));
     }
-    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +67,7 @@ session_start();
     <h1 class="">CRUD OPERATION - ADD USER</h1>
     <a href="display.php"><button class="btn btn-danger mt-3">Cancel</button></a>
     </div>
-    <form class="card" id="userForm">
+    <form class="card" id="userForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
       <div class="mt-2 mb-3 card-body">
         <label for="username" class="form-label card-title">Name</label>
         <input type="text" class="form-control" id="username" name="name" placeholder="Enter Your Name">
@@ -48,60 +89,9 @@ session_start();
         <div class="invalid-feedback" id="passwordError">Password is required</div>
       </div>
       <div class="m-2">
-          <button type="button" class="btn btn-primary px-5" id="submitButton">Submit</button>
+          <button type="submit" class="btn btn-primary px-5" name="submit" id="submitButton">Submit</button>
       </div>
     </form>
-    
   </div>
-
-  <script>
-    document.getElementById("submitButton").addEventListener("click", function() {
-      // Reset validation errors
-      document.querySelectorAll('.invalid-feedback').forEach(function(error) {
-        error.style.display = 'none';
-      });
-
-      // Get form data
-      var name = document.getElementById("username").value;
-      var email = document.getElementById("email").value;
-      var mobile = document.getElementById("mobile").value;
-      var password = document.getElementById("password").value;
-
-      // Validate form fields
-      if (!name) {
-        document.getElementById("nameError").style.display = 'block';
-        return;
-      }
-      if (!email) {
-        document.getElementById("emailError").style.display = 'block';
-        return;
-      }
-      if (!mobile) {
-        document.getElementById("mobileError").style.display = 'block';
-        return;
-      }
-      if (!password) {
-        document.getElementById("passwordError").style.display = 'block';
-        return;
-      }
-
-      // If all fields are valid, submit the form using AJAX
-      var formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("mobile", mobile);
-      formData.append("password", password);
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "connect.php", true);
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          // Handle response from server
-          console.log(xhr.responseText);
-        }
-      };
-      xhr.send(formData);
-    });
-  </script>
 </body>
 </html>
