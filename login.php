@@ -14,6 +14,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve username from POST data
     $input_username = $conn->real_escape_string($_POST['username']);
@@ -23,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Please fill both fields.";
     } else {
         // Hash the password for comparison
+        
         $hashed_password = md5($input_password);
         
         // Prepare a SQL statement to check if the username and hashed password match
