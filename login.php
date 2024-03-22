@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 }
 
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve username from POST data
     $input_username = $conn->real_escape_string($_POST['username']);
